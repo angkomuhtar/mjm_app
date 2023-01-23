@@ -1,9 +1,11 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {View, Text, Pressable, HStack, Icon} from 'native-base';
 
 import RBSheet from 'react-native-raw-bottom-sheet';
 import InputField from '@components/InputField';
 import {useForm} from 'react-hook-form';
+import {useDispatch, useSelector} from 'react-redux';
+import {show} from '../../../redux/slices/approval';
 
 const Stocktabs = () => {
   const refRBSheet = useRef();
@@ -15,14 +17,17 @@ const Stocktabs = () => {
   const handleSubmit = () => {
     refRBSheet.current.open();
   };
+  const dispatch = useDispatch();
+
+  const state = useSelector(state => state.approval);
+
+  useEffect(() => {
+    console.log('state');
+    dispatch(show());
+  }, []);
+
   return (
     <View p={4}>
-      {/* <TouchableOpacity
-        onPress={() => {
-          refRBSheet.current.open();
-        }}>
-        <Text>{APP_TOKEN}</Text>
-      </TouchableOpacity> */}
       <View p={4} background="white" shadow="2" borderRadius="md">
         <InputField
           name="items"

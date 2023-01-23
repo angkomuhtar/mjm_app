@@ -23,6 +23,7 @@ const index = () => {
     }, 2000);
   }),
     [];
+
   useEffect(() => {
     let tok = getItem();
     setToken(tok);

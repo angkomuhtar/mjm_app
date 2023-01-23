@@ -6,27 +6,24 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, {useRef} from 'react';
-import {View, Text, Pressable, HStack, Icon, VStack, Center} from 'native-base';
-import Ion from 'react-native-vector-icons/Ionicons';
-import {APP_TOKEN} from '@env';
+import {
+  View,
+  Text,
+  Pressable,
+  HStack,
+  Icon,
+  VStack,
+  Center,
+  Input,
+  ScrollView,
+} from 'native-base';
 import Header from '@components/Header';
-import QRCodeScanner from 'react-native-qrcode-scanner';
 import {RNCamera} from 'react-native-camera';
-import RBSheet from 'react-native-raw-bottom-sheet';
 import InputField from '../../../components/InputField';
 import {useForm} from 'react-hook-form';
+import Fa from 'react-native-vector-icons/Ionicons';
 
 const OpnameTabs = () => {
-  const refRBSheet = useRef();
-  const {
-    control,
-    // handleSubmit,
-    formState: {errors},
-  } = useForm();
-  const handleSubmit = () => {
-    refRBSheet.current.open();
-  };
-
   const onSuccess = e => {
     Linking.openURL(e.data).catch(err =>
       console.error('An error occured', err),
@@ -52,66 +49,39 @@ const OpnameTabs = () => {
           }}>
           <Header setting={true} title="Stock" position="absolute" />
         </RNCamera>
-        <KeyboardAvoidingView behavior="height">
-          <View p={4} background="gray.50" mt={-20}>
-            {/* <TouchableOpacity
-          onPress={() => {
-            refRBSheet.current.open();
-          }}>
-          <Text>{APP_TOKEN}</Text>
-        </TouchableOpacity> */}
-            <View p={4} background="white" shadow="2" borderRadius="md">
-              <InputField
-                name="items"
-                label="Items ID"
-                control={control}
-                placeholder="Username"
-                iconName="search"
-              />
-              <Pressable mt={4} onPress={() => handleSubmit()}>
-                {/* <Pressable mt={4} onPress={handleSubmit(onPressLogin)}> */}
-                {({isPressed}) => (
-                  <HStack
-                    py={2}
-                    px={4}
-                    borderRadius={6}
-                    bg={isPressed ? 'primary.200' : 'primary.300'}
-                    justifyContent="center"
-                    alignItems="center"
-                    space={2}>
-                    <Text
-                      fontFamily="mulish"
-                      fontWeight="600"
-                      fontSize="lg"
-                      color="white">
-                      FIND
-                    </Text>
-                  </HStack>
-                )}
-              </Pressable>
-            </View>
-            <RBSheet
-              ref={refRBSheet}
-              closeOnDragDown={true}
-              closeOnPressMask={true}
-              customStyles={{
-                wrapper: {
-                  backgroundColor: 'rgba(0,0,0,0.1)',
-                },
-                container: {
-                  borderTopLeftRadius: 15,
-                  borderTopRightRadius: 15,
-                },
-                draggableIcon: {
-                  backgroundColor: '#1264D1',
-                  marginTop: 15,
-                  width: 120,
-                },
-              }}>
-              {/* <YourOwnComponent /> */}
-            </RBSheet>
-          </View>
-        </KeyboardAvoidingView>
+        <VStack mt={-32}>
+          <TouchableOpacity onPress={() => alert('')}>
+            <HStack bg="black:alpha.60" p={4} alignItems="center" space={2}>
+              <Icon as={Fa} name="keypad-sharp" size="lg" color="white" />
+              <Text
+                color="white"
+                fontWeight="bold"
+                fontSize="xs"
+                textTransform="uppercase">
+                Enter Barcode Number
+              </Text>
+            </HStack>
+          </TouchableOpacity>
+          <VStack background="white" px="4" py="6">
+            <HStack alignItems="center" justifyContent="space-between">
+              <Text
+                fontWeight="extrabold"
+                fontSize="sm"
+                textTransform="uppercase">
+                Scan History
+              </Text>
+              <TouchableOpacity onPress={() => console.warn('hai')}>
+                <Icon as={Fa} name="trash-outline" size="md" color="black" />
+              </TouchableOpacity>
+            </HStack>
+            <VStack py={6}>
+              <Text fontSize="xs" fontWeight="normal">
+                Items that are scanned will be listed here
+              </Text>
+            </VStack>
+          </VStack>
+          <ScrollView flex={1}></ScrollView>
+        </VStack>
       </VStack>
     </>
   );

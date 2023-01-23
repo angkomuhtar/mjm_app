@@ -14,6 +14,7 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use(async function (config, data) {
   const token = await AsyncStorage.getItem('token');
   if (token) {
+    // eslint-disable-next-line dot-notation
     config.headers['Authorization'] = 'Bearer ' + token;
   }
   return config;

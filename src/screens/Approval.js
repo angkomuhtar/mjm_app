@@ -1,13 +1,23 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Header} from '@components';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {HStack, Icon, Text, View, VStack} from 'native-base';
+import {Icon, Text, VStack} from 'native-base';
 import Ant from 'react-native-vector-icons/AntDesign';
 import {All} from '@screens/tabs';
+import {useDispatch, useSelector} from 'react-redux';
+import {list} from '../redux/slices/approval';
 
 const Tab = createMaterialTopTabNavigator();
 
 const Approval = () => {
+  const dispatch = useDispatch();
+  const state = useSelector(state => state.approval);
+  useEffect(() => {
+    console.log('test >>>', state);
+    dispatch(list());
+  }, []);
+
+  console.log(state);
   return (
     <>
       <Header setting={true} title="Approvals" />

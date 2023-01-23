@@ -28,7 +28,7 @@ const ApprovalDetails = () => {
     <>
       <Header back={true} title="Request Details" />
       <ScrollView flex={1} p={4}>
-        {details.sts == 'loading' && (
+        {details.sts === 'loading' && (
           <VStack space={8}>
             <CardSkeleton />
             <CardSkeleton />
@@ -48,7 +48,7 @@ const ApprovalDetails = () => {
       <VStack space={4} shadow="5" background="white" py={6} px={4}>
         <Button
           background="primary.300"
-          isDisabled={details.sts == 'success' ? false : true}>
+          isDisabled={details.sts === 'success' ? false : true}>
           <HStack justifyContent="center" space={3} alignItems="center">
             <Icon as={Octi} name="shield-check" size={6} color="white" />
             <Text fontSize={16} fontWeight={600} color="white">
@@ -58,7 +58,7 @@ const ApprovalDetails = () => {
         </Button>
         <Button
           background="secondary.300"
-          isDisabled={details.sts == 'success' ? false : true}>
+          isDisabled={details.sts === 'success' ? false : true}>
           <HStack justifyContent="center" space={3} alignItems="center">
             <Icon as={Octi} name="shield-x" size={6} color="black" />
             <Text fontSize={16} fontWeight={600} color="black">

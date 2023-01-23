@@ -19,12 +19,12 @@ export const login = createAsyncThunk(
 
 export const logout = createAsyncThunk('auth/logout', async () => {
   try {
-    const resp = await apiClient.post(`signin`, {
-      username,
-      password,
-    });
-    console.log(resp.data);
-    return resp.data;
+    // const resp = await apiClient.post(`signin`, {
+    //   username,
+    //   password,
+    // });
+    console.log('hallo');
+    // return resp.data;
   } catch (error) {
     return error.response.data;
   }

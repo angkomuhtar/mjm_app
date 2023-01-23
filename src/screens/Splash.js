@@ -1,4 +1,3 @@
-import {View, SafeAreaView} from 'react-native';
 import React, {useEffect} from 'react';
 import {Image, Stack, Text} from 'native-base';
 import Logo from '../assets/logo-blue.png';
