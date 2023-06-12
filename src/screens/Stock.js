@@ -3,52 +3,22 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import {HStack, Text, View} from 'native-base';
 import Header from '@components/Header';
 import Stocktabs from '@screens/tabs/stock/Stocktabs';
-import OpnameTabs from '@screens/tabs/stock/OpnameTabs';
+import StockResult from '@screens/tabs/stock/Result';
+import StockSearch from '@screens/tabs/stock/Search';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-const Tab = createMaterialTopTabNavigator();
+const Stack = createNativeStackNavigator();
 const Stock = () => {
   return (
     <>
-      <Header setting={true} title="Stock" />
-      <Tab.Navigator
-        initialRouteName="stockTab"
-        screenOptions={({route}) => ({
-          lazy: true,
-          tabBarIndicatorStyle: {
-            backgroundColor: '#2F80ED',
-            height: '100%',
-            borderRadius: 4,
-          },
-          swipeEnabled: true,
-          tabBarLabel: ({focused}) => {
-            let label;
-            switch (route.name) {
-              case 'stockTab':
-                label = 'Find';
-                break;
-              case 'opnameTab':
-                label = 'Opname';
-                break;
-              default:
-                break;
-            }
-            return (
-              <HStack w="20" justifyContent="center">
-                <Text
-                  fontFamily="mulish"
-                  fontSize={12}
-                  fontWeight={focused ? '700' : '300'}
-                  color={focused ? 'white' : 'gray.300'}
-                  textTransform="uppercase">
-                  {label}
-                </Text>
-              </HStack>
-            );
-          },
-        })}>
-        <Tab.Screen name="stockTab" component={Stocktabs} />
-        <Tab.Screen name="opnameTab" component={OpnameTabs} />
-      </Tab.Navigator>
+      {/* <Header setting={true} title="Stock" /> */}
+      <Stack.Navigator
+        initialRouteName="scan"
+        screenOptions={{headerShown: false}}>
+        <Stack.Screen name="scan" component={Stocktabs} />
+        <Stack.Screen name="search" component={StockSearch} />
+        <Stack.Screen name="result" component={StockResult} />
+      </Stack.Navigator>
     </>
   );
 };

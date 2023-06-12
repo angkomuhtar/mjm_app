@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Header from '@components/Header';
 import {SafeAreaView, Dimensions} from 'react-native';
 import {
@@ -10,6 +10,8 @@ import {
   StackedBarChart,
 } from 'react-native-chart-kit';
 import {ScrollView, Text, View, VStack} from 'native-base';
+import {useSelector} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const screenWidth = Dimensions.get('window').width;
 const data = {
@@ -50,6 +52,13 @@ const ChartHeader = ({text}) => (
 );
 
 const Home = () => {
+  const {userdata, token} = useSelector(state => state.auth);
+  useEffect(() => {
+    // const setAsync = async () => {
+    //   AsyncStorage.setItem('token', token);
+    // };
+  }, []);
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <Header setting={true} title="Home" />
@@ -124,7 +133,7 @@ const Home = () => {
         </VStack>
 
         <VStack p="4">
-          <ChartHeader text="Best Seller" />
+          <ChartHeader text={`Best Seller ${userdata.username}`} />
           <PieChart
             data={[
               {
@@ -155,36 +164,6 @@ const Home = () => {
                 name: 'Moscow',
                 population: 10,
                 color: pieColor[2],
-                legendFontColor: '#000',
-              },
-              {
-                name: 'Moscow',
-                population: 199,
-                color: pieColor[7],
-                legendFontColor: '#000',
-              },
-              {
-                name: 'Moscow',
-                population: 201,
-                color: pieColor[1],
-                legendFontColor: '#000',
-              },
-              {
-                name: 'Moscow',
-                population: 128,
-                color: pieColor[6],
-                legendFontColor: '#000',
-              },
-              {
-                name: 'Moscow',
-                population: 119,
-                color: pieColor[0],
-                legendFontColor: '#000',
-              },
-              {
-                name: 'Moscow',
-                population: 122,
-                color: pieColor[5],
                 legendFontColor: '#000',
               },
             ]}

@@ -22,6 +22,7 @@ import {login} from '@redux/slices/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loading from '@components/Modal/Loading';
 import Stock from './Stock';
+import {navigate} from '@commons/RootNavigation';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -35,31 +36,27 @@ const Login = () => {
   } = useForm();
 
   const onPressLogin = async data => {
-    console.log(data);
     dispatch(login(data));
   };
 
-  const setStorage = async data => {
-    console.log('async data', data.user);
-    try {
-      await AsyncStorage.setItem('token', data.data.token);
-      await AsyncStorage.setItem('user', JSON.stringify(data.user));
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const setStorage = async data => {
+  //   try {
+  //     await AsyncStorage.setItem('token', data.data.token);
+  //     await AsyncStorage.setItem('user', JSON.stringify(data.user));
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   useEffect(() => {
     setModalShow(state.loading);
-    console.log('STATE', state);
-    if (state.success.sts) {
-      // navigate('main');
-      setStorage(state.success.data);
+  }, [state.loading]);
+
+  useEffect(() => {
+    if (state.isSuccess == false) {
+      setModalError(!state.isSuccess);
     }
-    if (state.failed) {
-      setModalError(state.failed.sts);
-    }
-  }, [state]);
+  }, [state.isSuccess]);
 
   return (
     <>
@@ -146,7 +143,7 @@ const Login = () => {
           </View>
           <View maxW="3/5" my={2}>
             <Text fontWeight={400} fontSize={12} textAlign="center">
-              {state?.failed?.data || ''}
+              {state?.message || ''}
             </Text>
           </View>
           <Pressable onPress={() => setModalError(false)}>

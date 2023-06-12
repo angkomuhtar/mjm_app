@@ -4,6 +4,7 @@ import DetailsCard from './Card/DetailsCard';
 import CardSkeleton from './CardSkeleton';
 import Header from './Header';
 import InputField from './InputField';
+import TextLabel from './TextLabel';
 
 export {
   Header,
@@ -12,4 +13,5 @@ export {
   DetailsCard,
   CardSkeleton,
   ButtonSkeleton,
+  TextLabel,
 };

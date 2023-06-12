@@ -1,85 +1,71 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {View, Text, Pressable, HStack, Icon} from 'native-base';
+import {Dimensions, TouchableOpacity} from 'react-native';
+import React, {useRef} from 'react';
+import {Text, HStack, Icon, VStack, ScrollView} from 'native-base';
+import Header from '@components/Header';
+import {RNCamera} from 'react-native-camera';
+import Fa from 'react-native-vector-icons/Ionicons';
+import {navigate} from '@commons/RootNavigation';
 
-import RBSheet from 'react-native-raw-bottom-sheet';
-import InputField from '@components/InputField';
-import {useForm} from 'react-hook-form';
-import {useDispatch, useSelector} from 'react-redux';
-import {show} from '../../../redux/slices/approval';
-
-const Stocktabs = () => {
-  const refRBSheet = useRef();
-  const {
-    control,
-    // handleSubmit,
-    formState: {errors},
-  } = useForm();
-  const handleSubmit = () => {
-    refRBSheet.current.open();
+const OpnameTabs = () => {
+  const onSuccess = e => {
+    Linking.openURL(e.data).catch(err =>
+      console.error('An error occured', err),
+    );
   };
-  const dispatch = useDispatch();
-
-  const state = useSelector(state => state.approval);
-
-  useEffect(() => {
-    console.log('state');
-    dispatch(show());
-  }, []);
-
   return (
-    <View p={4}>
-      <View p={4} background="white" shadow="2" borderRadius="md">
-        <InputField
-          name="items"
-          label="Items ID"
-          control={control}
-          placeholder="Username"
-          iconName="search"
+    <>
+      <VStack flex={1}>
+        <RNCamera
+          autoFocus="on"
+          style={{
+            position: 'relative',
+            height: Dimensions.get('screen').height - 700,
+            width: Dimensions.get('screen').width,
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+          }}
+          // onGoogleVisionBarcodesDetected={e=>?x` }
+          onBarCodeRead={e => {
+            navigate('result', {code: e.data});
+          }}
         />
-        <Pressable mt={4} onPress={() => handleSubmit()}>
-          {/* <Pressable mt={4} onPress={handleSubmit(onPressLogin)}> */}
-          {({isPressed}) => (
-            <HStack
-              py={2}
-              px={4}
-              borderRadius={6}
-              bg={isPressed ? 'primary.200' : 'primary.300'}
-              justifyContent="center"
-              alignItems="center"
-              space={2}>
+        <Header setting={true} title="Stock" position="absolute" />
+        <VStack mt={Dimensions.get('screen').height - 900}>
+          <TouchableOpacity onPress={() => navigate('search')}>
+            <HStack bg="black:alpha.60" p={4} alignItems="center" space={2}>
+              <Icon as={Fa} name="keypad-sharp" size="lg" color="white" />
               <Text
-                fontFamily="mulish"
-                fontWeight="600"
-                fontSize="lg"
-                color="white">
-                FIND
+                color="white"
+                fontWeight="bold"
+                fontSize="xs"
+                textTransform="uppercase">
+                Enter Barcode Number
               </Text>
             </HStack>
-          )}
-        </Pressable>
-      </View>
-      <RBSheet
-        ref={refRBSheet}
-        closeOnDragDown={true}
-        closeOnPressMask={true}
-        customStyles={{
-          wrapper: {
-            backgroundColor: 'rgba(0,0,0,0.1)',
-          },
-          container: {
-            borderTopLeftRadius: 15,
-            borderTopRightRadius: 15,
-          },
-          draggableIcon: {
-            backgroundColor: '#1264D1',
-            marginTop: 15,
-            width: 120,
-          },
-        }}>
-        {/* <YourOwnComponent /> */}
-      </RBSheet>
-    </View>
+          </TouchableOpacity>
+          <VStack background="white" px="4" py="6">
+            <HStack alignItems="center" justifyContent="space-between">
+              <Text
+                fontWeight="extrabold"
+                fontSize="sm"
+                textTransform="uppercase">
+                Scan History
+              </Text>
+              <TouchableOpacity onPress={() => console.warn('hai')}>
+                <Icon as={Fa} name="trash-outline" size="md" color="black" />
+              </TouchableOpacity>
+            </HStack>
+            <VStack py={6}>
+              <Text fontSize="xs" fontWeight="normal">
+                Items that are scanned will be listed here
+              </Text>
+            </VStack>
+          </VStack>
+          <ScrollView flex={1}></ScrollView>
+        </VStack>
+      </VStack>
+    </>
   );
 };
 
-export default Stocktabs;
+export default OpnameTabs;

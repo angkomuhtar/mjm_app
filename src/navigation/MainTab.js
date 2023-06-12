@@ -7,7 +7,7 @@ import Approval from '../screens/Approval';
 import Report from '../screens/Report';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {VStack, Text} from 'native-base';
-import OpnameTabs from '../screens/tabs/stock/OpnameTabs';
+import Stocktabs from '../screens/tabs/stock/Stocktabs';
 
 const Tab = createBottomTabNavigator();
 
@@ -66,7 +66,7 @@ const MainTab = () => {
         },
       })}>
       <Tab.Screen name="home" component={Home} />
-      <Tab.Screen name="stock" component={OpnameTabs} />
+      <Tab.Screen name="stock" component={Stock} />
       <Tab.Screen name="approval" component={Approval} />
       <Tab.Screen name="report" component={Report} />
     </Tab.Navigator>

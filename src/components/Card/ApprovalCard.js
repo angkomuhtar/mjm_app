@@ -14,11 +14,38 @@ import React from 'react';
 import {navigate} from '@commons/RootNavigation';
 import Ion from 'react-native-vector-icons/Ionicons';
 
-const ApprovalCard = ({loading = false, no, priority}) => {
+const priority = d => {
+  switch (d) {
+    case 'P1':
+      return {
+        color: 'danger.300',
+        text: 'High',
+      };
+    case 'P2':
+      return {
+        color: 'warning.300',
+        text: 'Medium',
+      };
+    case 'P3':
+      return {
+        color: 'info.300',
+        text: 'Low',
+      };
+    default:
+      return {
+        color: 'info.300',
+        text: 'Not Set',
+      };
+  }
+  return {};
+};
+
+const ApprovalCard = ({loading = false, item, accept, reject}) => {
   return (
     <View
       background="white"
       p={4}
+      my={2}
       borderRadius="md"
       shadow="1"
       borderColor="gray.50"
@@ -33,10 +60,10 @@ const ApprovalCard = ({loading = false, no, priority}) => {
           <HStack justifyContent="space-between" alignItems="flex-start">
             <VStack flex={1} space={2}>
               <Text fontWeight="800" fontSize={12}>
-                {no || 'PR Number -'}
+                {item.kode}
               </Text>
               <Badge
-                background="danger.300"
+                background={priority(item.priority).color}
                 alignSelf="flex-start"
                 rounded="full">
                 <Text
@@ -44,13 +71,13 @@ const ApprovalCard = ({loading = false, no, priority}) => {
                   fontWeight="800"
                   textTransform="uppercase"
                   color="white">
-                  {priority || 'Medium'}
+                  {priority(item.priority).text}
                 </Text>
               </Badge>
             </VStack>
             <Pressable
               onPress={() => {
-                navigate('approvalDetails');
+                navigate('approvalDetails', {id: item.id});
               }}>
               <Text color="primary.400" fontSize={12}>
                 Details
@@ -68,9 +95,9 @@ const ApprovalCard = ({loading = false, no, priority}) => {
             </VStack>
           ) : (
             <VStack flex={1}>
-              <Text fontSize="xs">Requestor : Test</Text>
-              <Text fontSize="xs">Narasi : test api</Text>
-              <Text fontSize="xs">Cabang Makassar</Text>
+              <Text fontSize="xs">Requestor : {item.author.nama_lengkap}</Text>
+              <Text fontSize="xs">Narasi : {item.narasi}</Text>
+              <Text fontSize="xs">{item.cabang.nama}</Text>
             </VStack>
           )}
           <VStack alignItems="flex-start">
@@ -95,16 +122,17 @@ const ApprovalCard = ({loading = false, no, priority}) => {
                   <Skeleton rounded="full" size={8} />
                   <Skeleton rounded="full" size={8} />
                 </>
-              ) : (
+              ) : item.status == 'created' ? (
                 <>
                   <IconButton
                     variant="outline"
                     rounded="full"
                     p="1"
+                    onPress={accept}
                     _icon={{as: Ion, name: 'checkmark-sharp', size: 'md'}}
                   />
                   <IconButton
-                    onPress={() => alert('reject')}
+                    onPress={reject}
                     variant="outline"
                     colorScheme="danger"
                     rounded="full"
@@ -112,6 +140,8 @@ const ApprovalCard = ({loading = false, no, priority}) => {
                     _icon={{as: Ion, name: 'close', size: 'md'}}
                   />
                 </>
+              ) : (
+                <></>
               )}
             </HStack>
           </VStack>

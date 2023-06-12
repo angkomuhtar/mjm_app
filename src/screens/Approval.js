@@ -1,27 +1,41 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Header} from '@components';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {Icon, Text, VStack} from 'native-base';
 import Ant from 'react-native-vector-icons/AntDesign';
 import {All} from '@screens/tabs';
+import {useNavigationState} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {list} from '../redux/slices/approval';
 
 const Tab = createMaterialTopTabNavigator();
 
 const Approval = () => {
+  const [activeTab, setActiveTab] = useState(0);
   const dispatch = useDispatch();
-  const state = useSelector(state => state.approval);
-  useEffect(() => {
-    console.log('test >>>', state);
-    dispatch(list());
-  }, []);
+  // console.log('state navigation', state);
 
-  console.log(state);
+  useEffect(() => {
+    if (activeTab == 0) {
+      dispatch(list('created'));
+    } else if (activeTab == 1) {
+      dispatch(list('approved'));
+    } else if (activeTab == 2) {
+      dispatch(list('finish'));
+    } else {
+      dispatch(list('rejected'));
+    }
+  }, [activeTab]);
+
   return (
     <>
       <Header setting={true} title="Approvals" />
       <Tab.Navigator
+        screenListeners={{
+          state: e => {
+            setActiveTab(e.data.state.index);
+          },
+        }}
         initialRouteName="stockTab"
         screenOptions={({route}) => ({
           lazy: true,
@@ -41,10 +55,15 @@ const Approval = () => {
                 label = 'Approved';
                 icon = 'carryout';
                 break;
+              case 'finish':
+                label = 'Finished';
+                icon = 'carryout';
+                break;
               case 'reject':
                 label = 'Rejected';
                 icon = 'exception1';
                 break;
+
               default:
                 break;
             }
@@ -71,6 +90,7 @@ const Approval = () => {
         })}>
         <Tab.Screen name="all" component={All} />
         <Tab.Screen name="approve" component={All} />
+        <Tab.Screen name="finish" component={All} />
         <Tab.Screen name="reject" component={All} />
       </Tab.Navigator>
     </>

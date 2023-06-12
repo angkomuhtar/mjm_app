@@ -1,12 +1,12 @@
 import {configureStore} from '@reduxjs/toolkit';
 import authReducer from './slices/auth';
-import purchaseReducer from './slices/purchase';
+import item from './slices/item';
 import approval from './slices/approval';
 
 export const Store = configureStore({
   reducer: {
     auth: authReducer,
-    purchase: purchaseReducer,
+    item: item,
     approval: approval,
   },
   devTools:

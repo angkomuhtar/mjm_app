@@ -3,7 +3,7 @@ import {API_URL} from '@env';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const apiClient = axios.create({
-  baseURL: API_URL,
+  baseURL: 'http://makassarjayamarine.id/api-v1/',
   // responseType: 'json',
   headers: {
     'Content-type': 'application/json',
@@ -15,7 +15,7 @@ apiClient.interceptors.request.use(async function (config, data) {
   const token = await AsyncStorage.getItem('token');
   if (token) {
     // eslint-disable-next-line dot-notation
-    config.headers['Authorization'] = 'Bearer ' + token;
+    config.headers['Authorization'] = 'Bearer ' + JSON.parse(token).token;
   }
   return config;
 });

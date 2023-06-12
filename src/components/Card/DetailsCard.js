@@ -1,7 +1,7 @@
 import {Text, VStack} from 'native-base';
 import React from 'react';
 
-const DetailsCard = ({children, title}) => {
+const DetailsCard = ({children, title, p = 4, background = 'white'}) => {
   return (
     <VStack space={2}>
       <Text
@@ -11,7 +11,7 @@ const DetailsCard = ({children, title}) => {
         textTransform="uppercase">
         {title}
       </Text>
-      <VStack h="48" background="white" borderRadius="md" p={4}>
+      <VStack background={background} borderRadius="md" p={p}>
         {children}
       </VStack>
     </VStack>
