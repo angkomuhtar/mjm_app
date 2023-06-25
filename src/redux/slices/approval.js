@@ -7,6 +7,7 @@ export const list = createAsyncThunk('show', async type => {
       ? `purchasing-request?keyword=true&status=${type}`
       : `purchasing-request`;
     const resp = await apiClient.get(url);
+    console.log(resp);
     return resp.data;
   } catch (error) {
     return error.response.data;

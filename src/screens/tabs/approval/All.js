@@ -52,10 +52,6 @@ const All = () => {
         />
       )}
     </SafeAreaView>
-    // <View p={4}>
-
-    //
-    // </View>
   );
 };
 

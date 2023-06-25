@@ -1,8 +1,22 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, '12.4'
+platform :ios, '13.0'
 install! 'cocoapods', :deterministic_uuids => false
+
+# START ADD 24 JUNI 2030
+def __apply_Xcode_14_3_RC_post_install_workaround(installer)
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      current_target = config.build_settings['IPHONEOS_DEPLOYMENT_TARGET']
+      minimum_target = '13.0'
+      if current_target.to_f < minimum_target.to_f
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = minimum_target
+      end
+    end
+  end
+end
+# END ADD 24 JUNI 2030
 
 production = ENV["PRODUCTION"] == "1"
 
@@ -31,5 +45,8 @@ target 'mjm_apps' do
   post_install do |installer|
     react_native_post_install(installer)
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
+    # START ADD 24 JUNI 2030
+    __apply_Xcode_14_3_RC_post_install_workaround(installer)
+    # END ADD 24 JUNI 2030
   end
 end

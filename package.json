@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "ios": "react-native run-ios --simulator='iPhone 14'",
     "start": "react-native start",
+    "adb-reverse": "adb reverse tcp:3035 tcp:3035",
     "test": "jest",
     "lint": "eslint ."
   },

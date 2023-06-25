@@ -2,6 +2,7 @@
 import React, {useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from '../screens/Home';
+import Opname from '../screens/tabs/opname/index';
 import Stock from '../screens/Stock';
 import Approval from '../screens/Approval';
 import Report from '../screens/Report';
@@ -20,6 +21,7 @@ const MainTab = () => {
         tabBarHideOnKeyboard: true,
         headerShown: false,
         tabBarIcon: props => {
+          // console.log(props);
           const {focused, color, size} = props;
           let iconName;
           let label;
@@ -30,6 +32,9 @@ const MainTab = () => {
           } else if (route.name === 'stock') {
             iconName = focused ? 'server' : 'server-outline';
             label = 'Stock';
+          } else if (route.name === 'opname') {
+            iconName = focused ? 'basket' : 'basket-outline';
+            label = 'Opname';
           } else if (route.name === 'approval') {
             iconName = focused ? 'newspaper' : 'newspaper-outline';
             label = 'Approve';
@@ -67,6 +72,7 @@ const MainTab = () => {
       })}>
       <Tab.Screen name="home" component={Home} />
       <Tab.Screen name="stock" component={Stock} />
+      <Tab.Screen name="opname" component={Opname} />
       <Tab.Screen name="approval" component={Approval} />
       <Tab.Screen name="report" component={Report} />
     </Tab.Navigator>
