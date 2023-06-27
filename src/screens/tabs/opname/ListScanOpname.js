@@ -1,12 +1,13 @@
 import { StyleSheet, View, TouchableOpacity, ScrollView, Dimensions } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import { Icon, Text, VStack, Center, HStack, Skeleton, Divider } from "native-base";
+import { Icon, Text, VStack, HStack, Skeleton, Divider, Input } from "native-base";
 import Ant from 'react-native-vector-icons/AntDesign';
 import {RNCamera} from 'react-native-camera'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import DeviceInfo from 'react-native-device-info';
 
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import apiClient from '../../../commons/ApiCall';
 
 import Header from '@components/Header';
@@ -14,6 +15,9 @@ import Header from '@components/Header';
 const ListScanOpname = () => {
     const { params } = useRoute()
     const navigation = useNavigation()
+    let brand = DeviceInfo.getBrand();
+    let deviceId = DeviceInfo.getDeviceId();
+    console.log(brand, deviceId);
     const {loading, success, data} = useSelector(state => state.item);
     const [ openScan, setOpenScan ] = useState(false)
     const [ dataScan, setDataScan ] = useState([])
@@ -54,10 +58,21 @@ const ListScanOpname = () => {
                 if(resultData.length > 0){
                     setDataScan(dataScan.map( v => v.id === data.id ? {...v, qty: v.qty + 1} : v))
                 }else{
-                    setDataScan([...dataScan, {so: params, id: data.id, nama: data.nama, qty: 1, stn: data.satuan, num_part: data.num_part || ''}])
+                    setDataScan([
+                        ...dataScan, 
+                        {
+                            so: params, 
+                            devices: brand + " " + deviceId,
+                            id: data.id, 
+                            nama: data.nama, 
+                            qty: 1, 
+                            stn: data.satuan, 
+                            num_part: data.num_part || ''
+                        }
+                    ])
                 }
+                await _handleLocalStorageScan(dataScan)
                 setOpenScan(false)
-                _handleLocalStorageScan(dataScan)
             }else{
                 setOpenScan(false)
             }
@@ -68,9 +83,18 @@ const ListScanOpname = () => {
           }
     }
 
-    const _handleRemoveItems = (val) => {
+    // OPEN SHEET INPUT-TEXT
+    const _handleChangeQuantity = async (id, teks) => {
+        if(teks){
+            setDataScan(dataScan.map( v => v.id === id ? {...v, qty: parseFloat(teks)} : v))
+            await _handleLocalStorageScan(dataScan.map( v => v.id === id ? {...v, qty: parseFloat(teks)} : v))
+        }
+
+    }
+
+    const _handleRemoveItems = async(val) => {
         setDataScan(dataScan.filter( v => v.id != val.id))
-        _handleLocalStorageScan(dataScan.filter( v => v.id != val.id))
+        await _handleLocalStorageScan(dataScan.filter( v => v.id != val.id))
     }
 
     const _handleClearDataScan = () => {
@@ -91,6 +115,7 @@ const ListScanOpname = () => {
     }
 
     // console.log(data, loading, success);
+    console.log(JSON.stringify(dataScan, null, 2));
     return (
         <View style={{flex: 1, backgroundColor: 'white'}}>
             <Header setting={false} back={true} title="Start-Opname" />
@@ -127,23 +152,23 @@ const ListScanOpname = () => {
                                     <View key={i} style={{borderBottomWidth: 1, borderBottomColor: '#ddd'}}>
                                         <HStack space={4} py="1" px={5}>
                                             <VStack flex={1}>
+                                                <Text fontWeight="800" fontSize={12}>
+                                                    {params}
+                                                </Text>
                                                 <Text fontWeight="800" fontSize={20}>
                                                     {v?.nama}
                                                 </Text>
                                                 <Text fontWeight="800" fontSize={12}>
                                                     {v.num_part}
                                                 </Text>
-                                                <Text fontWeight="200" fontSize={12}>
-                                                    Keterangan
-                                                </Text>
                                             </VStack>
-                                            <VStack>
+                                            <VStack width="1/5">
                                                 <Text fontWeight="800" fontSize={12}>
                                                     Jumlah
                                                 </Text>
-                                                <Text fontWeight="800" fontSize={20}>
-                                                    {v.qty}
-                                                </Text>
+                                                <TouchableOpacity onPress={null}>
+                                                    <Input borderWidth={0} px={0} value={`${v.qty}`} size="xs" onChangeText={(teks) => _handleChangeQuantity(v.id, teks)} fontSize={16} py={0} />
+                                                </TouchableOpacity>
                                                 <Text fontWeight="400" fontSize={12}>
                                                     {v.stn}
                                                 </Text>

@@ -9,6 +9,7 @@
 import {extendTheme, NativeBaseProvider, StatusBar} from 'native-base';
 import React from 'react';
 import {SafeAreaView} from 'react-native';
+import { SheetProvider } from "react-native-actions-sheet";
 import {Provider} from 'react-redux';
 import Navigator from './src/navigation';
 import {Store} from './src/redux/Store';
@@ -99,7 +100,7 @@ const App = () => {
       <NativeBaseProvider theme={theme}>
         <StatusBar />
         {/* <SafeAreaView style={{flex: 1, backgroundColor: '#EFEFEF'}}> */}
-        <Navigator />
+          <Navigator />
         {/* </SafeAreaView> */}
       </NativeBaseProvider>
     </Provider>

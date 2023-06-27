@@ -30,8 +30,9 @@ const itemSlice = createSlice({
     [getByCode.fulfilled]: (state, action) => {
       if (action.payload.diagnostic.error) {
         // state.details = {sts: 'failed', data: []};
-        console.log(action.payload);
+        // console.log('zzzz', JSON.stringify(action.payload, null, 2));
       } else {
+        // console.log('xxxx', JSON.stringify(action.payload, null, 2));
         state.loading = false;
         state.success = true;
         state.data = action.payload.data;

@@ -52,7 +52,7 @@ const MainOpname = () => {
                             </Button>
                         </View>
                         <View>
-                            <Button size="sm" variant="outline">
+                            <Button onPress={() => navigation.navigate('history-opname')} size="sm" variant="outline">
                                 Riwayat Opname
                             </Button>
                         </View>

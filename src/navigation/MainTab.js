@@ -21,7 +21,6 @@ const MainTab = () => {
         tabBarHideOnKeyboard: true,
         headerShown: false,
         tabBarIcon: props => {
-          // console.log(props);
           const {focused, color, size} = props;
           let iconName;
           let label;
