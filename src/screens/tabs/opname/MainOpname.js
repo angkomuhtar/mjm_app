@@ -3,8 +3,6 @@ import React, { useState } from 'react'
 import {Center, Text, Icon, HStack, Button} from 'native-base';
 import {RNCamera} from 'react-native-camera';
 import { useNavigation } from '@react-navigation/native'
-import Ant from 'react-native-vector-icons/AntDesign';
-import {All} from '@screens/tabs';
 
 const { width, height } = Dimensions.get("window")
 const ASPECT_RATIO = width / height
@@ -24,8 +22,9 @@ const MainOpname = () => {
                     <RNCamera
                         autoFocus="on"
                         style={{
-                            position: 'relative',
-                            height: Dimensions.get('screen').height-200,
+                            position: "absolute",
+                            top: 0,
+                            height: Dimensions.get('screen').height,
                             width: Dimensions.get('screen').width,
                             justifyContent: 'flex-end',
                             alignItems: 'center',

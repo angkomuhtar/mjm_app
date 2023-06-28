@@ -85,7 +85,7 @@ const OpnameTabs = () => {
           autoFocus="on"
           style={{
             position: 'relative',
-            height: Dimensions.get('screen').height - 700,
+            height: height * .4,
             width: Dimensions.get('screen').width,
             justifyContent: 'flex-end',
             alignItems: 'center',
@@ -96,7 +96,7 @@ const OpnameTabs = () => {
           }}
         />
         <Header setting={true} title="Stock" position="absolute" />
-        <VStack mt={height * .21}>
+        <VStack>
           <TouchableOpacity onPress={() => navigate('search')}>
             <HStack bg="black:alpha.60" p={4} alignItems="center" space={2}>
               <Icon as={Fa} name="keypad-sharp" size="lg" color="white" />

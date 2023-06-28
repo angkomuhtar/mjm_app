@@ -1,4 +1,4 @@
-import { StyleSheet, View, Image, Dimensions } from 'react-native'
+import { StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
