@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {SafeAreaView} from 'react-native';
 import {Header} from '@components';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {Icon, Text, VStack} from 'native-base';
@@ -28,7 +29,7 @@ const Approval = () => {
   }, [activeTab]);
 
   return (
-    <>
+    <SafeAreaView style={{flex: 1}}>
       <Header setting={true} title="Approvals" />
       <Tab.Navigator
         screenListeners={{
@@ -93,7 +94,7 @@ const Approval = () => {
         <Tab.Screen name="finish" component={All} />
         <Tab.Screen name="reject" component={All} />
       </Tab.Navigator>
-    </>
+    </SafeAreaView>
   );
 };
 

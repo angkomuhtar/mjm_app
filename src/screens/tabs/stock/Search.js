@@ -1,4 +1,4 @@
-import {Dimensions, TouchableOpacity} from 'react-native';
+import {SafeAreaView, TouchableOpacity} from 'react-native';
 import React, {useRef, useState, useEffect} from 'react';
 import Ion from 'react-native-vector-icons/Ionicons';
 import {Text, VStack, HStack, Input, Icon, Pressable, Stack, ScrollView, TextLabel, Image} from 'native-base';
@@ -26,7 +26,7 @@ const Result = ({route}) => {
 
   // console.log(keyword);
   return (
-    <>
+    <SafeAreaView style={{flex: 1}}>
       <Header back={true} title="Enter Code" />
       <VStack height={75} p={3} bgColor={"white"}>
         <HStack justifyContent={"space-between"} width={"100%"} height={80}>
@@ -72,7 +72,7 @@ const Result = ({route}) => {
           })
         }
       </ScrollView>
-    </>
+    </SafeAreaView>
   );
 };
 

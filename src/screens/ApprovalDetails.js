@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import {SafeAreaView} from 'react-native';
 import {Header, CardSkeleton} from '@components';
 import {
   Button,
@@ -25,7 +26,7 @@ const ApprovalDetails = ({route}) => {
   }, []);
 
   return (
-    <>
+    <SafeAreaView style={{flex: 1}}>
       <Header back={true} title="Request Details" />
       <ScrollView flex={1} p={4}>
         {isLoading ? (
@@ -142,7 +143,7 @@ const ApprovalDetails = ({route}) => {
           </Button>
         </VStack>
       )}
-    </>
+    </SafeAreaView>
   );
 };
 

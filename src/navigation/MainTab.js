@@ -10,6 +10,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {VStack, Text} from 'native-base';
 import Stocktabs from '../screens/tabs/stock/Stocktabs';
 
+import LabaRugi from '../screens/laporan/LabaRugi';
+
 const Tab = createBottomTabNavigator();
 
 const MainTab = () => {

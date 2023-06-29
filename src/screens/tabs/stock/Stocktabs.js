@@ -1,4 +1,4 @@
-import {Dimensions, TouchableOpacity} from 'react-native';
+import {Dimensions, TouchableOpacity, SafeAreaView} from 'react-native';
 import React, {useRef, useState} from 'react';
 import {Text, HStack, Icon, VStack, ScrollView, Image} from 'native-base';
 import {TextLabel} from '@components';
@@ -79,7 +79,7 @@ const OpnameTabs = () => {
   console.log("history", history);
 
   return (
-    <>
+    <SafeAreaView style={{flex: 1}}>
       <VStack flex={1}>
         <RNCamera
           autoFocus="on"
@@ -163,7 +163,7 @@ const OpnameTabs = () => {
         </ScrollView>
 
       </VStack>
-    </>
+    </SafeAreaView>
   );
 };
 

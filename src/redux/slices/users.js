@@ -3,11 +3,16 @@ import {
   createEntityAdapter,
   createSlice,
 } from '@reduxjs/toolkit';
+import apiClient from '../../commons/ApiCall';
 import {RootState} from '.';
 
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
-  const response = await fetch('https://reqres.in/api/users?delay=1');
-  return (await response.json()).data;
+  try {
+    const resp = await apiClient.get(`profile`);
+    return resp.data;
+  } catch (error) {
+    return error.response.data;
+  }
 });
 
 export const usersAdapter = createEntityAdapter();

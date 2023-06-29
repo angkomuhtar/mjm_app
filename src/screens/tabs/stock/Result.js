@@ -1,4 +1,4 @@
-import {Dimensions, TouchableOpacity} from 'react-native';
+import {Dimensions, TouchableOpacity, SafeAreaView} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import {Text, VStack, ScrollView, Image, HStack, Flex, Divider} from 'native-base';
 import Header from '@components/Header';
@@ -44,7 +44,7 @@ const Result = ({route}) => {
   }
 
   return (
-    <>
+    <SafeAreaView style={{flex: 1}}>
       <Header back={true} title="Scan Result" />
       <VStack flex={1}>
         <ScrollView>
@@ -104,7 +104,7 @@ const Result = ({route}) => {
           }
         </ScrollView>
       </VStack>
-    </>
+    </SafeAreaView>
   );
 };
 

@@ -1,4 +1,4 @@
-import { StyleSheet, View, TouchableOpacity, ScrollView, Dimensions } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, ScrollView, Dimensions, SafeAreaView } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { Icon, Text, VStack, HStack, Skeleton, Divider, Input } from "native-base";
 import Ant from 'react-native-vector-icons/AntDesign';
@@ -117,87 +117,90 @@ const ListScanOpname = () => {
     // console.log(data, loading, success);
     console.log(JSON.stringify(dataScan, null, 2));
     return (
-        <View style={{flex: 1, backgroundColor: 'white'}}>
-            <Header setting={false} back={true} title="Start-Opname" />
-            <View style={{height: 50, paddingHorizontal: 20, paddingVertical: 10, flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
-                <Text>Mulai Scan</Text>
-                <TouchableOpacity onPress={() => setOpenScan(true)}>
-                    <Icon as={Ant} name={"scan1"} size={30} color={'gray.900'} />
-                </TouchableOpacity>
-            </View>
-            <Divider my="2" _light={{bg: "muted.800"}} _dark={{bg: "muted.50"}} />
-            {
-                openScan ?
-                <View style={{justifyContent: "center", alignItems: "center", flex: 1}}>
-                    <RNCamera
-                        autoFocus="on"
-                        style={{
-                            position: 'relative',
-                            height: Dimensions.get('screen').height-120,
-                            width: Dimensions.get('screen').width,
-                            justifyContent: 'flex-end',
-                            alignItems: 'center',
-                        }}
-                        // onGoogleVisionBarcodesDetected={e=>?x` }
-                        onBarCodeRead={e => {
-                            _handleScanItems(e.data)
-                    }}/>
+        <SafeAreaView style={{flex: 1}}>
+            <View style={{flex: 1, backgroundColor: 'white'}}>
+                <Header setting={false} back={true} title="Start-Opname" />
+                <View style={{height: 50, paddingHorizontal: 20, paddingVertical: 10, flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
+                    <Text>Mulai Scan</Text>
+                    <TouchableOpacity onPress={() => setOpenScan(true)}>
+                        <Icon as={Ant} name={"scan1"} size={30} color={'gray.900'} />
+                    </TouchableOpacity>
                 </View>
-                :
-                <ScrollView>
-                    <View style={{flex: 1}}>
-                        {
-                            dataScan.map( (v, i) => {
-                                return (
-                                    <View key={i} style={{borderBottomWidth: 1, borderBottomColor: '#ddd'}}>
-                                        <HStack space={4} py="1" px={5}>
-                                            <VStack flex={1}>
-                                                <Text fontWeight="800" fontSize={12}>
-                                                    {params}
-                                                </Text>
-                                                <Text fontWeight="800" fontSize={20}>
-                                                    {v?.nama}
-                                                </Text>
-                                                <Text fontWeight="800" fontSize={12}>
-                                                    {v.num_part}
-                                                </Text>
-                                            </VStack>
-                                            <VStack width="1/5">
-                                                <Text fontWeight="800" fontSize={12}>
-                                                    Jumlah
-                                                </Text>
-                                                <TouchableOpacity onPress={null}>
-                                                    <Input borderWidth={0} px={0} value={`${v.qty}`} size="xs" onChangeText={(teks) => _handleChangeQuantity(v.id, teks)} fontSize={16} py={0} />
-                                                </TouchableOpacity>
-                                                <Text fontWeight="400" fontSize={12}>
-                                                    {v.stn}
-                                                </Text>
-                                            </VStack>
-                                            <VStack alignItems="center" justifyContent={"center"}>
-                                                <TouchableOpacity onPress={() => _handleRemoveItems(v)}>
-                                                    <Icon as={Ant} name={"delete"} size={"md"} color={'red.500'} />
-                                                </TouchableOpacity>
-                                            </VStack>
-                                        </HStack>
-                                    </View>
-                                )
-                            })
-                        }
+                <Divider my="2" _light={{bg: "muted.800"}} _dark={{bg: "muted.50"}} />
+                {
+                    openScan ?
+                    <View style={{justifyContent: "center", alignItems: "center", flex: 1}}>
+                        <RNCamera
+                            autoFocus="on"
+                            style={{
+                                position: 'relative',
+                                height: Dimensions.get('screen').height-120,
+                                width: Dimensions.get('screen').width,
+                                justifyContent: 'flex-end',
+                                alignItems: 'center',
+                            }}
+                            // onGoogleVisionBarcodesDetected={e=>?x` }
+                            onBarCodeRead={e => {
+                                _handleScanItems(e.data)
+                        }}/>
                     </View>
-                    {
-                        dataScan.length > 0 &&
-                        <View style={{flex: 1, justifyContent: "space-around", alignItems: "center", marginVertical: 15, flexDirection: "row"}}>
-                            <TouchableOpacity onPress={_handleClearDataScan}>
-                                <Text fontWeight="300">Clear Data</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={_handleSendDataOpname}>
-                                <Text fontWeight="800">Save Data</Text>
-                            </TouchableOpacity>
+                    :
+                    <ScrollView>
+                        <View style={{flex: 1}}>
+                            {
+                                dataScan.map( (v, i) => {
+                                    return (
+                                        <View key={i} style={{borderBottomWidth: 1, borderBottomColor: '#ddd'}}>
+                                            <HStack space={4} py="1" px={5}>
+                                                <VStack flex={1}>
+                                                    <Text fontWeight="800" fontSize={12}>
+                                                        {params}
+                                                    </Text>
+                                                    <Text fontWeight="800" fontSize={20}>
+                                                        {v?.nama}
+                                                    </Text>
+                                                    <Text fontWeight="800" fontSize={12}>
+                                                        {v.num_part}
+                                                    </Text>
+                                                </VStack>
+                                                <VStack width="1/5">
+                                                    <Text fontWeight="800" fontSize={12}>
+                                                        Jumlah
+                                                    </Text>
+                                                    <TouchableOpacity onPress={null}>
+                                                        <Input borderWidth={0} px={0} value={`${v.qty}`} size="xs" onChangeText={(teks) => _handleChangeQuantity(v.id, teks)} fontSize={16} py={0} />
+                                                    </TouchableOpacity>
+                                                    <Text fontWeight="400" fontSize={12}>
+                                                        {v.stn}
+                                                    </Text>
+                                                </VStack>
+                                                <VStack alignItems="center" justifyContent={"center"}>
+                                                    <TouchableOpacity onPress={() => _handleRemoveItems(v)}>
+                                                        <Icon as={Ant} name={"delete"} size={"md"} color={'red.500'} />
+                                                    </TouchableOpacity>
+                                                </VStack>
+                                            </HStack>
+                                        </View>
+                                    )
+                                })
+                            }
                         </View>
-                    }
-                </ScrollView>
-            }
-        </View>
+                        {
+                            dataScan.length > 0 &&
+                            <View style={{flex: 1, justifyContent: "space-around", alignItems: "center", marginVertical: 15, flexDirection: "row"}}>
+                                <TouchableOpacity onPress={_handleClearDataScan}>
+                                    <Text fontWeight="300">Clear Data</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={_handleSendDataOpname}>
+                                    <Text fontWeight="800">Save Data</Text>
+                                </TouchableOpacity>
+                            </View>
+                        }
+                    </ScrollView>
+                }
+            </View>
+
+        </SafeAreaView>
     )
 }
 

@@ -7,6 +7,8 @@ import {goBack, navigate} from '../commons/RootNavigation';
 const Header = ({
   back = false,
   setting = false,
+  filter = false,
+  onFilter = null,
   title,
   position = 'relative',
 }) => {
@@ -25,7 +27,7 @@ const Header = ({
         justifyContent="space-between"
         space={2}
         alignItems="center"
-        p={4}>
+        px={2} py={4}>
         {back && (
           <Pressable w={30} onPress={() => goBack()}>
             <Icon as={Ion} name="chevron-back" size={30} color="primary.400" />
@@ -41,6 +43,17 @@ const Header = ({
             {title}
           </Text>
         </View>
+        {
+          filter && 
+          <Pressable w={30} onPress={onFilter}>
+            <Icon
+              as={Ion}
+              name="funnel-outline"
+              size={25}
+              color="primary.400"
+            />
+          </Pressable>
+        }
         {setting ? (
           <Pressable w={30} onPress={() => navigate('setting')}>
             <Icon
