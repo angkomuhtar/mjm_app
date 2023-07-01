@@ -2,12 +2,12 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import apiClient from '../../commons/ApiCall';
 
 export const list = createAsyncThunk('show', async type => {
+  console.log(type);
   try {
     const url = type
       ? `purchasing-request?keyword=true&status=${type}`
       : `purchasing-request`;
     const resp = await apiClient.get(url);
-    console.log(resp);
     return resp.data;
   } catch (error) {
     return error.response.data;
@@ -27,7 +27,7 @@ export const action = createAsyncThunk(
   `purchase/action`,
   async ({id, type}) => {
     try {
-      // console.log('cuma ini', id, type);
+      console.log('cuma ini', id, type);
       // return id;
       const resp = await apiClient.post(`purchasing-request/${id}/${type}`);
       return resp.data;

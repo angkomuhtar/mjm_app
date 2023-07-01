@@ -41,6 +41,7 @@ const priority = d => {
 };
 
 const ApprovalCard = ({loading = false, item, accept, reject}) => {
+  console.log("ITEM", item);
   return (
     <View
       background="white"
@@ -98,6 +99,7 @@ const ApprovalCard = ({loading = false, item, accept, reject}) => {
               <Text fontSize="xs">Requestor : {item.author.nama_lengkap}</Text>
               <Text fontSize="xs">Narasi : {item.narasi}</Text>
               <Text fontSize="xs">{item.cabang.nama}</Text>
+              <Text fontSize="xs">{item.gudang.nama}</Text>
             </VStack>
           )}
           <VStack alignItems="flex-start">
@@ -112,8 +114,9 @@ const ApprovalCard = ({loading = false, item, accept, reject}) => {
                   Total
                 </Text>
                 <Text fontSize="xl" fontWeight="800">
-                  4.000
+                  {item.items.filter(v => v.aktif === 'Y').length} items
                 </Text>
+                <Text fontSize={"12px"} fontWeight={"200"}>Permintaan</Text>
               </>
             )}
             <HStack space={2} mt="3">

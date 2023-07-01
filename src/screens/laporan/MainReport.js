@@ -27,7 +27,7 @@ const MainReport = (props) => {
                             </VStack>
                             <VStack>
                                 <Text fontSize={"16px"} bold>Laporan Laba Rugi</Text>
-                                <Text fontWeight={"200"} fontSize={"12px"}>Laporan Keuangan Laba Rugi Cabang</Text>
+                                <Text fontWeight={"200"} fontSize={"12px"}>Laporan Keuangan Laba Rugi Perusahaan</Text>
                             </VStack>
                             </HStack>
                             <HStack width={"1/5"} alignItems={"center"} justifyContent={"flex-end"}>
@@ -36,7 +36,7 @@ const MainReport = (props) => {
                         </HStack>
                         </VStack>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('sales-harian-report')}>
                         <VStack bgColor={"white"} mx={"10px"} mt={"10px"} p={5} height={"80px"}>
                         <HStack>
                             <HStack width={"4/5"}>
@@ -54,7 +54,7 @@ const MainReport = (props) => {
                         </HStack>
                         </VStack>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('top-barang-report')}>
                         <VStack bgColor={"white"} mx={"10px"} mt={"10px"} p={5} height={"80px"}>
                         <HStack>
                             <HStack width={"4/5"}>
@@ -72,7 +72,7 @@ const MainReport = (props) => {
                         </HStack>
                         </VStack>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('barang-minim-report')}>
                         <VStack bgColor={"white"} mx={"10px"} mt={"10px"} p={5} height={"80px"}>
                         <HStack>
                             <HStack width={"4/5"}>

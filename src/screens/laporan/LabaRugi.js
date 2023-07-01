@@ -3,6 +3,7 @@ import {Image, Stack, HStack, Text, VStack, Icon, Input, Divider} from 'native-b
 import React, { useState, useEffect } from 'react'
 import Ion from 'react-native-vector-icons/Ionicons';
 import Ant from "react-native-vector-icons/AntDesign";
+import DatePicker from 'react-native-date-picker'
 import apiClient from '../../commons/ApiCall';
 import moment from 'moment';
 
@@ -10,6 +11,8 @@ import Header from '@components/Header';
 
 const LabaRugi = () => {
     const [ openFilter, setOpenFilter ] = useState(false)
+    const [ openDateStart, setOpenDateStart ] = useState(false)
+    const [ openDateEnd, setOpenDateEnd ] = useState(false)
     const [ filter, setFilter ] = useState({ 
         startDate: moment().startOf('month').format("YYYY-MM-DD"), 
         endDate: moment().endOf('month').format("YYYY-MM-DD")
@@ -38,11 +41,23 @@ const LabaRugi = () => {
           }
     }
 
-    const _handleSelectDate = (type, teks) => {
+    const _handleChangeDateTeks = (type, teks) => {
         if(type === 'start'){
             setFilter({...filter, startDate: teks})
         }else{
             setFilter({...filter, endDate: teks})
+        }
+    }
+
+    const _handleSelectDate = (type, date) => {
+        console.log(type);
+        console.log(date);
+        if(type === 'start'){
+            setFilter({...filter, startDate: moment(date).format("YYYY-MM-DD")})
+            setOpenDateStart(false)
+        }else{
+            setFilter({...filter, endDate: moment(date).format("YYYY-MM-DD")})
+            setOpenDateEnd(false)
         }
     }
 
@@ -66,17 +81,43 @@ const LabaRugi = () => {
                                 <VStack pt={"10px"} w={"full"}>
                                     <Text fontSize={"12px"}>Mulai Tanggal</Text>
                                     <HStack alignItems="center" flex={1} justifyContent={"space-between"}>
-                                        <Input onChangeText={(teks) => _handleSelectDate('start', teks)} value={`${filter.startDate}`} size="sm" width={"90%"} placeholder="format: YYYY-MM-DD" />
-                                        <Icon as={Ant} name="calendar" size={"20px"} color="grey.500" width={"5%"} />
+                                        <Input onChangeText={(teks) => _handleChangeDateTeks('start', teks)} value={`${filter.startDate}`} size="sm" width={"90%"} placeholder="format: YYYY-MM-DD" />
+                                        <TouchableOpacity onPress={() => setOpenDateStart(true)}>
+                                            <Icon as={Ant} name="calendar" size={"25px"} color="grey.500" width={"5%"} />
+                                        </TouchableOpacity>
                                     </HStack>
+                                    <DatePicker
+                                        modal
+                                        mode='date'
+                                        locale="ID"
+                                        open={openDateStart}
+                                        date={new Date(moment().startOf('month').format("YYYY-MM-DD"))}
+                                        onConfirm={(date) => _handleSelectDate('start', date)}
+                                        onCancel={() => {
+                                            setOpenDateStart(false)
+                                        }}
+                                    />
                                 </VStack>
                                 <VStack pt={"10px"} w={"full"}>
                                     <Text fontSize={"12px"}>Hingga Tanggal</Text>
                                     <HStack alignItems="center" flex={1} justifyContent={"space-between"}>
-                                        <Input onChangeText={(teks) => _handleSelectDate('end', teks)} value={`${filter.endDate}`} size="sm" width={"90%"} placeholder="format: YYYY-MM-DD" />
-                                        <Icon as={Ant} name="calendar" size={"20px"} color="grey.500" width={"5%"} />
+                                        <Input onChangeText={(teks) => _handleChangeDateTeks('end', teks)} value={`${filter.endDate}`} size="sm" width={"90%"} placeholder="format: YYYY-MM-DD" />
+                                        <TouchableOpacity onPress={() => setOpenDateEnd(true)}>
+                                            <Icon as={Ant} name="calendar" size={"25px"} color="grey.500" width={"5%"} />
+                                        </TouchableOpacity>
                                     </HStack>
                                 </VStack>
+                                <DatePicker
+                                        modal
+                                        mode='date'
+                                        locale="ID"
+                                        open={openDateEnd}
+                                        date={new Date(moment().startOf('month').format("YYYY-MM-DD"))}
+                                        onConfirm={(date) => _handleSelectDate('end', date)}
+                                        onCancel={() => {
+                                            setOpenDateEnd(false)
+                                        }}
+                                    />
                             </VStack>
                         }
                         <VStack p={4} bg={"white"}>
@@ -157,5 +198,3 @@ const LabaRugi = () => {
 }
 
 export default LabaRugi
-
-const styles = StyleSheet.create({})

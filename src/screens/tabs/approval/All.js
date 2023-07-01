@@ -36,18 +36,20 @@ const All = () => {
               <Text>No data founds</Text>
             </HStack>
           }
-          renderItem={({item, key}) => (
-            <ApprovalCard
-              key={key}
-              item={item}
-              accept={() => {
-                dispatch(action({id: id, type: 'approved'}));
-              }}
-              reject={() => {
-                dispatch(action({id: id, type: 'rejected'}));
-              }}
-            />
-          )}
+          renderItem={({item, key}) => {
+            return (
+              <ApprovalCard
+                key={key}
+                item={item}
+                accept={() => {
+                  dispatch(action({id: item.id, type: 'approved'}));
+                }}
+                reject={() => {
+                  dispatch(action({id: item.id, type: 'reject'}));
+                }}
+              />
+            )
+          }}
           keyExtractor={item => item.id}
         />
       )}

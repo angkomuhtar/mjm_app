@@ -14,9 +14,9 @@ const Result = ({route}) => {
   const {loading, success, data} = useSelector(state => state.item);
   const [ stokGudang, setStokGudang ] = useState(null)
 
-  console.log("stock", stokGudang);
-  console.log("stock", data);
-  console.log("loading", loading);
+  // console.log("stock", stokGudang);
+  // console.log("stock", data);
+  // console.log("loading", loading);
 
   useEffect(() => {
     dispatch(getByCode(code));

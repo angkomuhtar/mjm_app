@@ -2,6 +2,7 @@
 import React, {useEffect} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import MainTab from './MainTab';
+import Notifikasi from '../screens/Notifikasi';
 import {Setting, ApprovalDetails} from '@screens';
 import {View} from 'native-base';
 
@@ -23,6 +24,13 @@ const MainStack = () => {
       <Stack.Screen
         name="setting"
         component={Setting}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="notification"
+        component={Notifikasi}
         options={{
           headerShown: false,
         }}
